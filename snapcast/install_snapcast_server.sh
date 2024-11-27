@@ -21,9 +21,11 @@ pct exec "$CTID" -- apt-get update
 pct exec "$CTID" -- apt-get install -y curl gnupg
 
 # Add Snapcast repository and install Snapcast server
+# https://docs.mopidy.com/stable/installation/debian/
 echo "Adding Snapcast repository and installing Snapcast server..."
-pct exec "$CTID" -- sh -c "echo 'deb http://apt.mopidy.com/ jessie main contrib non-free' > /etc/apt/sources.list.d/mopidy.list"
-pct exec "$CTID" -- sh -c "curl -sL https://apt.mopidy.com/mopidy.gpg | gpg --dearmor | tee /etc/apt/trusted.gpg.d/mopidy.gpg > /dev/null"
+pct exec "$CTID" -- sh -c "mkdir -p /etc/apt/keyrings"
+pct exec "$CTID" -- sh -c "wget -q -O /etc/apt/keyrings/mopidy-archive-keyring.gpg https://apt.mopidy.com/mopidy.gpg"
+pct exec "$CTID" -- sh -c "sudo wget -q -O /etc/apt/sources.list.d/mopidy.list https://apt.mopidy.com/bullseye.list"
 pct exec "$CTID" -- apt-get update
 pct exec "$CTID" -- apt-get install -y snapserver
 
