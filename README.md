@@ -18,4 +18,4 @@ This repository contains a set of scripts for creating and managing LXC containe
 - To run the scripts, use the following command:
 
 ```bash
-bash -c "$(wget -qLO - https://raw.githubusercontent.com/levvvy/proxmox-scripts/main/launch_script.sh)"
+bash -c "$(wget -qLO - https://raw.githubusercontent.com/Henry-Sir/proxmox-scripts/refs/heads/main/main/launch_script.sh)"
