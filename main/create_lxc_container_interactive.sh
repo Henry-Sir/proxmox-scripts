@@ -8,15 +8,15 @@ get_input() {
 }
 
 # Variables with default values
-HOSTNAME=$(get_input "Enter container hostname:" "mycontainer")
-TEMPLATE=$(get_input "Enter container template:" "local:vztmpl/ubuntu-20.04-standard_20.04-1_amd64.tar.gz")
+HOSTNAME=$(get_input "Enter container hostname:" "snapcast")
+TEMPLATE=$(get_input "Enter container template:" "local-nvme:vztmpl/ubuntu-22.04-standard_22.04-1_amd64.tar.zst")
 STORAGE=$(get_input "Enter storage location:" "local-lvm")
 MEMORY=$(get_input "Enter memory (MB):" "1024")
 SWAP=$(get_input "Enter swap (MB):" "512")
 DISK_SIZE=$(get_input "Enter disk size (e.g., 8G):" "8G")
 NET_IFACE=$(get_input "Enter network interface (e.g., vmbr0):" "vmbr0")
-IP_ADDR=$(get_input "Enter IP address (e.g., 192.168.1.100/24):" "192.168.1.100/24")
-GATEWAY=$(get_input "Enter gateway IP address:" "192.168.1.1")
+IP_ADDR=$(get_input "Enter IP address (e.g., 192.168.1.100/24):" "192.168.5.247/24")
+GATEWAY=$(get_input "Enter gateway IP address:" "192.168.5.254")
 
 # Create LXC container
 echo "Creating LXC container with the following configuration:"
@@ -38,6 +38,7 @@ echo "LXC container created with ID $CTID."
 # Ask for permission before proceeding to the second script
 if (whiptail --title "Install Snapcast Server" --yesno "Do you want to install Snapcast Server in the newly created container?" 8 78); then
   echo "Installing Snapcast Server..."
+  wget https://raw.githubusercontent.com/Henry-Sir/proxmox-scripts/refs/heads/main/main/create_lxc_container_interactive.sh
   ./install_snapcast_server.sh "$CTID"
 else
   echo "Snapcast Server installation skipped."
